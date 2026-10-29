@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سوق عدي - المتجر العصري (سحابي)</title>
+    <title>Market oday - المتجر العصري (سحابي)</title>
     <!-- مكتبة الأيقونات والخطوط -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,7 +11,7 @@
     <style>
         :root {
             --primary: #121212;
-            --accent: #d4af37; /* لون ذهبي أنيق */
+            --accent: #d4af37;
             --accent-hover: #b5952f;
             --bg-light: #f8f9fa;
             --text-dark: #222;
@@ -34,7 +34,6 @@
             line-height: 1.6;
         }
 
-        /* شريط التنويهات العلوي */
         #announcement-bar {
             background: linear-gradient(135deg, var(--accent), #f39c12);
             color: var(--white);
@@ -45,7 +44,6 @@
             display: none;
         }
 
-        /* الهيدر */
         header {
             background-color: var(--primary);
             color: var(--white);
@@ -83,7 +81,6 @@
             color: var(--accent);
         }
 
-        /* قسم البانر الرئيسي */
         .hero {
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
             color: var(--white);
@@ -104,7 +101,6 @@
             color: #ddd;
         }
 
-        /* أقسام المتجر والمنتجات */
         .container {
             max-width: 1200px;
             margin: 40px auto;
@@ -228,7 +224,6 @@
             color: var(--white);
         }
 
-        /* المودال (النافذة المنبثقة) للخصوصية */
         .modal {
             display: none;
             position: fixed;
@@ -279,7 +274,6 @@
             font-size: 0.95rem;
         }
 
-        /* لوحة تحكم الأدمن */
         #admin-panel {
             display: none;
             background-color: #1e1e1e;
@@ -367,7 +361,6 @@
             cursor: pointer;
         }
 
-        /* الفوتر */
         footer {
             background-color: var(--primary);
             color: var(--white);
@@ -405,10 +398,8 @@
 </head>
 <body>
 
-    <!-- شريط التنويه المتحرك -->
     <div id="announcement-bar">مرحباً بكم في سوق عدي - تسوقوا أحدث العطور الإلكترونيات والساعات بأفضل الأسعار!</div>
 
-    <!-- الهيدر -->
     <header>
         <div class="logo-area">
             <h1>سوق عدي</h1>
@@ -420,28 +411,26 @@
         </ul>
     </header>
 
-    <!-- الواجهة الرئيسية (البانر) -->
     <section class="hero" id="hero-section">
         <h2>عالم من الأناقة والتكنولوجيا بين يديك</h2>
         <p>اكتشف تشكيلة حصرية من أرقى العطور، أحدث الإلكترونيات، والفخامة في الساعات المصممة خصيصاً لك.</p>
     </section>
 
-    <!-- لوحة تحكم الأدمن (مخفية افتراضياً) -->
     <div id="admin-panel">
         <h2><i class="fa-solid fa-gear"></i> لوحة تحكم الأدمن (سحابي)</h2>
         
         <div class="admin-form-group">
             <label>تعديل التنويه العلوي السحابي:</label>
             <input type="text" id="announcement-input" placeholder="اكتب التنويه هنا وتركه فارغاً لإخفائه">
-            <button class="admin-btn" style="margin-top: 10px;" onclick="saveAnnouncementToCloud()">حفظ التنويه سحابياً</button>
+            <button class="admin-btn" style="margin-top: 10px;" id="save-announcement-btn">حفظ التنويه سحابياً</button>
         </div>
 
         <hr style="border-color: #444; margin: 20px 0;">
 
         <div class="admin-form-group">
-            <label>تغيير صورة واجهة الموقع (البانر الرئيسي سحابياً):</label>
-            <input type="file" id="hero-img-file" accept="image/*" style="margin-bottom: 10px;">
-            <button class="admin-btn" onclick="updateHeroImageCloud()">تحديث صورة الغلاف سحابياً</button>
+            <label>رابط صورة الغلاف (URL) أو اتركها:</label>
+            <input type="text" id="hero-img-url" placeholder="https://example.com/image.jpg">
+            <button class="admin-btn" style="margin-top: 10px;" id="update-hero-btn">تحديث صورة الغلاف</button>
         </div>
 
         <hr style="border-color: #444; margin: 20px 0;">
@@ -466,36 +455,32 @@
             <input type="text" id="new-price" placeholder="مثال: 45 دينار">
         </div>
         <div class="admin-form-group">
-            <label>صورة المنتج (اختر من ملفات الهاتف):</label>
+            <label>صورة المنتج (اختر صورة من الهاتف أو التقطها):</label>
             <input type="file" id="new-img-file" accept="image/*">
         </div>
         
-        <button class="admin-btn" id="save-product-btn" onclick="saveProductToCloud()">حفظ المنتج بالسحابة</button>
-        <button class="admin-btn" id="cancel-edit-btn" style="background-color: #7f8c8d; display: none; margin-right: 10px;" onclick="resetProductForm()">إلغاء التعديل</button>
+        <button class="admin-btn" id="save-product-btn">حفظ المنتج بالسحابة</button>
+        <button class="admin-btn" id="cancel-edit-btn" style="background-color: #7f8c8d; display: none; margin-right: 10px;">إلغاء التعديل</button>
 
         <h3 style="margin-top: 30px;">إدارة المنتجات السحابية</h3>
         <div id="admin-products-list" style="margin-top: 15px; max-height: 250px; overflow-y: auto;"></div>
     </div>
 
-    <!-- قسم المنتجات -->
     <div class="container" id="products">
         <h2 class="section-title">منتجاتنا المميزة</h2>
         
-        <!-- أزرار الفلترة للأقسام -->
         <div class="filter-buttons">
-            <button class="filter-btn active" onclick="filterProducts('all', this)">الكل</button>
-            <button class="filter-btn" onclick="filterProducts('perfumes', this)">عطور</button>
-            <button class="filter-btn" onclick="filterProducts('electronics', this)">إلكترونيات</button>
-            <button class="filter-btn" onclick="filterProducts('watches', this)">ساعات</button>
+            <button class="filter-btn active" data-category="all">الكل</button>
+            <button class="filter-btn" data-category="perfumes">عطور</button>
+            <button class="filter-btn" data-category="electronics">إلكترونيات</button>
+            <button class="filter-btn" data-category="watches">ساعات</button>
         </div>
 
-        <!-- شبكة عرض المنتجات -->
         <div class="products-grid" id="products-grid">
             <p style="grid-column: 1/-1; text-align:center; color:#777;">جاري تحميل المنتجات من السحابة...</p>
         </div>
     </div>
 
-    <!-- نافذة سياسة الخصوصية المنبثقة (Modal) -->
     <div class="modal" id="privacy-modal">
         <div class="modal-content">
             <span class="close-modal" id="close-privacy">&times;</span>
@@ -507,20 +492,16 @@
         </div>
     </div>
 
-    <!-- الفوتر مع زر الأدمن المخفي داخل Oday Ghassan (10 نقرات) -->
     <footer id="contact">
         <p>للتواصل معنا والاستفسار: <a href="https://wa.me/962796115364" target="_blank" dir="ltr"><i class="fa-brands fa-whatsapp"></i> 0796115364</a></p>
         <p>تم التصميم بواسطة <strong id="adminTrigger">Oday Ghassan</strong></p>
     </footer>
 
-    <!-- ربط Firebase وسكربت التطبيق السحابي -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-analytics.js";
         import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-storage.js";
 
-        // إعدادات Firebase الخاصة بك
         const firebaseConfig = {
             apiKey: "AIzaSyDqLhpvyXOjTnY0Ux7f7GOa2eE7A2I5dCA",
             authDomain: "oday-a1ab6.firebaseapp.com",
@@ -531,19 +512,15 @@
             measurementId: "G-C2EC0SJVRZ"
         };
 
-        // تهيئة Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
-        const storage = getStorage(app);
 
         let products = [];
         let currentFilter = 'all';
 
-        // جلب الإعدادات (التنويه وصورة الغلاف) والمنتجات من سحابة فايرستور عند تحميل الصفحة
         async function loadCloudData() {
             try {
-                // 1. جلب الإعدادات العامة (التنويه وصورة البانر)
                 const settingsDoc = await getDoc(doc(db, "settings", "store_config"));
                 if (settingsDoc.exists()) {
                     const data = settingsDoc.data();
@@ -559,7 +536,6 @@
                     }
                 }
 
-                // 2. جلب المنتجات من قاعدة البيانات السحابية
                 const querySnapshot = await getDocs(collection(db, "products"));
                 products = [];
                 querySnapshot.forEach((docSnap) => {
@@ -570,12 +546,10 @@
                 renderAdminProductsList();
             } catch (error) {
                 console.error("خطأ في جلب البيانات من السحابة: ", error);
-                document.getElementById('products-grid').innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:red;">تعذر الاتصال بالسحابة. تأكد من إعدادات قاعدة البيانات.</p>';
             }
         }
 
-        // حفظ التنويه في السحابة
-        window.saveAnnouncementToCloud = async function() {
+        document.getElementById('save-announcement-btn').addEventListener('click', async () => {
             const val = document.getElementById('announcement-input').value.trim();
             try {
                 await setDoc(doc(db, "settings", "store_config"), { announcement: val }, { merge: true });
@@ -588,38 +562,37 @@
                 }
                 alert('تم حفظ التنويه في السحابة بنجاح!');
             } catch (error) {
-                alert('حدث خطأ أثناء الحفظ بالسحابة: ' + error.message);
+                alert('حدث خطأ أثناء الحفظ: ' + error.message);
             }
-        }
+        });
 
-        // تحديث صورة الغلاف ورفعها إلى Firebase Storage
-        window.updateHeroImageCloud = async function() {
-            const fileInput = document.getElementById('hero-img-file');
-            if (fileInput.files && fileInput.files[0]) {
-                const file = fileInput.files[0];
-                const storageRef = ref(storage, 'hero_images/' + Date.now() + '_' + file.name);
-                
-                alert('جاري رفع صورة الغلاف إلى السحابة...');
+        document.getElementById('update-hero-btn').addEventListener('click', async () => {
+            const url = document.getElementById('hero-img-url').value.trim();
+            if (url) {
                 try {
-                    const snapshot = await uploadBytes(storageRef, file);
-                    const downloadURL = await getDownloadURL(snapshot.ref);
-
-                    await setDoc(doc(db, "settings", "store_config"), { heroBg: downloadURL }, { merge: true });
-                    
+                    await setDoc(doc(db, "settings", "store_config"), { heroBg: url }, { merge: true });
                     const heroSection = document.getElementById('hero-section');
-                    heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${downloadURL}')`;
-                    
-                    alert('تم تحديث وحفظ صورة الغلاف في السحابة بنجاح!');
+                    heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${url}')`;
+                    alert('تم تحديث صورة الغلاف بنجاح!');
                 } catch (error) {
-                    alert('فشل رفع الصورة: ' + error.message);
+                    alert('فشل التحديث: ' + error.message);
                 }
             } else {
-                alert('يرجى اختيار صورة أولاً.');
+                alert('يرجى إدخال رابط الصورة أولاً.');
             }
+        });
+
+        // تحويل الصورة المرفوعة من الهاتف إلى Base64 لتخزينها مباشرة دون الحاجة لـ Storage و CORS
+        function convertImageToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
         }
 
-        // حفظ أو تعديل منتج وإرساله للسحابة
-        window.saveProductToCloud = async function() {
+        document.getElementById('save-product-btn').addEventListener('click', async () => {
             const editId = document.getElementById('edit-product-id').value;
             const title = document.getElementById('new-title').value.trim();
             const category = document.getElementById('new-category').value;
@@ -631,7 +604,7 @@
                 return;
             }
 
-            alert('جاري حفظ البيانات والصورة في سحابة Firebase...');
+            alert('جاري حفظ المنتج في قاعدة البيانات...');
 
             try {
                 let imgUrl = 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=500&q=80';
@@ -643,9 +616,7 @@
 
                 if (imgFileinput.files && imgFileinput.files[0]) {
                     const file = imgFileinput.files[0];
-                    const storageRef = ref(storage, 'products/' + Date.now() + '_' + file.name);
-                    const snapshot = await uploadBytes(storageRef, file);
-                    imgUrl = await getDownloadURL(snapshot.ref);
+                    imgUrl = await convertImageToBase64(file);
                 }
 
                 const productData = { title, category, price, img: imgUrl };
@@ -659,26 +630,25 @@
                 }
 
                 resetProductForm();
-                loadCloudData();
+                await loadCloudData();
             } catch (error) {
-                alert('حدث خطأ أثناء الاتصال بالسحابة: ' + error.message);
+                alert('حدث خطأ أثناء الحفظ: ' + error.message);
+                console.error("Firestore Error:", error);
             }
-        }
+        });
 
-        // حذف منتج من السحابة
         window.deleteProductCloud = async function(id) {
             if (confirm('هل أنت متأكد من حذف هذا المنتج من السحابة؟')) {
                 try {
                     await deleteDoc(doc(db, "products", id));
                     alert('تم الحذف من السحابة بنجاح!');
-                    loadCloudData();
+                    await loadCloudData();
                 } catch (error) {
                     alert('حدث خطأ أثناء الحذف: ' + error.message);
                 }
             }
-        }
+        };
 
-        // تعبئة البيانات لتعديل المنتج
         window.editProduct = function(id) {
             const product = products.find(p => p.id === id);
             if (product) {
@@ -693,9 +663,9 @@
                 
                 document.getElementById('admin-panel').scrollIntoView({ behavior: 'smooth' });
             }
-        }
+        };
 
-        window.resetProductForm = function() {
+        function resetProductForm() {
             document.getElementById('edit-product-id').value = '';
             document.getElementById('new-title').value = '';
             document.getElementById('new-price').value = '';
@@ -706,7 +676,8 @@
             document.getElementById('cancel-edit-btn').style.display = 'none';
         }
 
-        // عرض المنتجات على واجهة المتجر
+        document.getElementById('cancel-edit-btn').addEventListener('click', resetProductForm);
+
         function renderProducts(filter = 'all') {
             currentFilter = filter;
             const grid = document.getElementById('products-grid');
@@ -738,15 +709,21 @@
             });
         }
 
-        window.filterProducts = function(category, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderProducts(category);
-        }
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                renderProducts(e.target.getAttribute('data-category'));
+            });
+        });
 
         function renderAdminProductsList() {
             const listDiv = document.getElementById('admin-products-list');
             listDiv.innerHTML = '';
+            if(products.length === 0) {
+                listDiv.innerHTML = '<p style="color:#aaa; text-align:center;">لا توجد منتجات مضافة بعد.</p>';
+                return;
+            }
             products.forEach(p => {
                 listDiv.innerHTML += `
                     <div class="admin-product-item">
@@ -760,7 +737,6 @@
             });
         }
 
-        // نافذة سياسة الخصوصية
         const privacyModal = document.getElementById('privacy-modal');
         const privacyLink = document.getElementById('privacy-link');
         const closePrivacy = document.getElementById('close-privacy');
@@ -778,7 +754,6 @@
             if (e.target === privacyModal) privacyModal.style.display = 'none';
         });
 
-        // تفعيل لوحة الأدمن بـ 10 نقرات على اسم Oday Ghassan
         let clickCount = 0;
         let clickTimer = null;
         const adminTrigger = document.getElementById('adminTrigger');
@@ -806,7 +781,6 @@
             }
         });
 
-        // تحميل البيانات السحابية عند فتح الصفحة لأول مرة
         loadCloudData();
     </script>
 </body>
