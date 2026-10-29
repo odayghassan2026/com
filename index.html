@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوق عدي - المتجر العصري (سحابي)</title>
+    <!-- مكتبة الأيقونات والخطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #121212;
+            --accent: #d4af37; /* لون ذهبي أنيق */
+            --accent-hover: #b5952f;
+            --bg-light: #f8f9fa;
+            --text-dark: #222;
+            --text-light: #666;
+            --white: #ffffff;
+            --gray-border: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* شريط التنويهات العلوي */
+        #announcement-bar {
+            background: linear-gradient(135deg, var(--accent), #f39c12);
+            color: var(--white);
+            text-align: center;
+            padding: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        /* الهيدر */
+        header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-area h1 {
+            font-size: 1.8rem;
+            color: var(--accent);
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* قسم البانر الرئيسي */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            color: var(--white);
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #ddd;
+        }
+
+        /* أقسام المتجر والمنتجات */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--white);
+            border: 2px solid var(--gray-border);
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: var(--white);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-border);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background-color: #eee;
+        }
+
+        .product-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .product-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-top: auto;
+            margin-bottom: 15px;
+        }
+
+        .buy-btn {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .buy-btn:hover {
+            background-color: #25d366;
+            color: var(--white);
+        }
+
+        /* المودال (النافذة المنبثقة) للخصوصية */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .close-modal:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-content h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .modal-content p {
+            color: var(--text-light);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        /* لوحة تحكم الأدمن */
+        #admin-panel {
+            display: none;
+            background-color: #1e1e1e;
+            color: var(--white);
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 2px solid var(--accent);
+        }
+
+        #admin-panel h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .admin-form-group {
+            margin-bottom: 15px;
+        }
+
+        .admin-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #ddd;
+        }
+
+        .admin-form-group input, .admin-form-group select, .admin-form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background-color: #2a2a2a;
+            color: var(--white);
+        }
+
+        .admin-btn {
+            background-color: var(--accent);
+            color: var(--primary);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .admin-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .admin-product-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #252525;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            gap: 10px;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 5px;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* الفوتر */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-top: 4px solid var(--accent);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        #adminTrigger {
+            cursor: pointer;
+            user-select: none;
+            display: inline-block;
+        }
+
+        @media(max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شريط التنويه المتحرك -->
+    <div id="announcement-bar">مرحباً بكم في سوق عدي - تسوقوا أحدث العطور الإلكترونيات والساعات بأفضل الأسعار!</div>
+
+    <!-- الهيدر -->
+    <header>
+        <div class="logo-area">
+            <h1>سوق عدي</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#products">المنتجات</a></li>
+            <li><a href="#" id="privacy-link">سياسة الخصوصية</a></li>
+            <li><a href="#contact">تواصل معنا</a></li>
+        </ul>
+    </header>
+
+    <!-- الواجهة الرئيسية (البانر) -->
+    <section class="hero" id="hero-section">
+        <h2>عالم من الأناقة والتكنولوجيا بين يديك</h2>
+        <p>اكتشف تشكيلة حصرية من أرقى العطور، أحدث الإلكترونيات، والفخامة في الساعات المصممة خصيصاً لك.</p>
+    </section>
+
+    <!-- لوحة تحكم الأدمن (مخفية افتراضياً) -->
+    <div id="admin-panel">
+        <h2><i class="fa-solid fa-gear"></i> لوحة تحكم الأدمن (سحابي)</h2>
+        
+        <div class="admin-form-group">
+            <label>تعديل التنويه العلوي السحابي:</label>
+            <input type="text" id="announcement-input" placeholder="اكتب التنويه هنا وتركه فارغاً لإخفائه">
+            <button class="admin-btn" style="margin-top: 10px;" onclick="saveAnnouncementToCloud()">حفظ التنويه سحابياً</button>
+        </div>
+
+        <hr style="border-color: #444; margin: 20px 0;">
+
+        <div class="admin-form-group">
+            <label>تغيير صورة واجهة الموقع (البانر الرئيسي سحابياً):</label>
+            <input type="file" id="hero-img-file" accept="image/*" style="margin-bottom: 10px;">
+            <button class="admin-btn" onclick="updateHeroImageCloud()">تحديث صورة الغلاف سحابياً</button>
+        </div>
+
+        <hr style="border-color: #444; margin: 20px 0;">
+
+        <h3 id="form-title">إضافة منتج جديد سحابياً</h3>
+        <input type="hidden" id="edit-product-id" value="">
+        
+        <div class="admin-form-group">
+            <label>اسم المنتج:</label>
+            <input type="text" id="new-title" placeholder="مثال: ساعة لكسري فاخرة">
+        </div>
+        <div class="admin-form-group">
+            <label>القسم:</label>
+            <select id="new-category">
+                <option value="perfumes">عطور</option>
+                <option value="electronics">إلكترونيات</option>
+                <option value="watches">ساعات</option>
+            </select>
+        </div>
+        <div class="admin-form-group">
+            <label>السعر:</label>
+            <input type="text" id="new-price" placeholder="مثال: 45 دينار">
+        </div>
+        <div class="admin-form-group">
+            <label>صورة المنتج (اختر من ملفات الهاتف):</label>
+            <input type="file" id="new-img-file" accept="image/*">
+        </div>
+        
+        <button class="admin-btn" id="save-product-btn" onclick="saveProductToCloud()">حفظ المنتج بالسحابة</button>
+        <button class="admin-btn" id="cancel-edit-btn" style="background-color: #7f8c8d; display: none; margin-right: 10px;" onclick="resetProductForm()">إلغاء التعديل</button>
+
+        <h3 style="margin-top: 30px;">إدارة المنتجات السحابية</h3>
+        <div id="admin-products-list" style="margin-top: 15px; max-height: 250px; overflow-y: auto;"></div>
+    </div>
+
+    <!-- قسم المنتجات -->
+    <div class="container" id="products">
+        <h2 class="section-title">منتجاتنا المميزة</h2>
+        
+        <!-- أزرار الفلترة للأقسام -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterProducts('all', this)">الكل</button>
+            <button class="filter-btn" onclick="filterProducts('perfumes', this)">عطور</button>
+            <button class="filter-btn" onclick="filterProducts('electronics', this)">إلكترونيات</button>
+            <button class="filter-btn" onclick="filterProducts('watches', this)">ساعات</button>
+        </div>
+
+        <!-- شبكة عرض المنتجات -->
+        <div class="products-grid" id="products-grid">
+            <p style="grid-column: 1/-1; text-align:center; color:#777;">جاري تحميل المنتجات من السحابة...</p>
+        </div>
+    </div>
+
+    <!-- نافذة سياسة الخصوصية المنبثقة (Modal) -->
+    <div class="modal" id="privacy-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-privacy">&times;</span>
+            <h3>سياسة الخصوصية - سوق عدي</h3>
+            <p>نحن في <strong>سوق عدي</strong> نلتزم بحماية خصوصية بياناتك الشخصية ومعلومات تصفحك للموقع.</p>
+            <p><strong>جمع البيانات:</strong> نحافظ على سرية بيانات العملاء ولا يتم مشاركة أي معلومات شخصية مع أي أطراف ثالثة إلا لأغراض إتمام عمليات الشحن والتوصيل.</p>
+            <p><strong>الأمان:</strong> نستخدم تقنيات حديثة لضمان حماية المعاملات والتصفح الآمن داخل المتجر.</p>
+            <p>لأي استفسارات إضافية حول سياسة الخصوصية، يسعدنا تواصلكم معنا عبر وسائل الاتصال المتاحة.</p>
+        </div>
+    </div>
+
+    <!-- الفوتر مع زر الأدمن المخفي داخل Oday Ghassan (10 نقرات) -->
+    <footer id="contact">
+        <p>للتواصل معنا والاستفسار: <a href="https://wa.me/962796115364" target="_blank" dir="ltr"><i class="fa-brands fa-whatsapp"></i> 0796115364</a></p>
+        <p>تم التصميم بواسطة <strong id="adminTrigger">Oday Ghassan</strong></p>
+    </footer>
+
+    <!-- ربط Firebase وسكربت التطبيق السحابي -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-storage.js";
+
+        // إعدادات Firebase الخاصة بك
+        const firebaseConfig = {
+            apiKey: "AIzaSyDqLhpvyXOjTnY0Ux7f7GOa2eE7A2I5dCA",
+            authDomain: "oday-a1ab6.firebaseapp.com",
+            projectId: "oday-a1ab6",
+            storageBucket: "oday-a1ab6.firebasestorage.app",
+            messagingSenderId: "1070227145825",
+            appId: "1:1070227145825:web:2b3e299368bebe2757d620",
+            measurementId: "G-C2EC0SJVRZ"
+        };
+
+        // تهيئة Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        let products = [];
+        let currentFilter = 'all';
+
+        // جلب الإعدادات (التنويه وصورة الغلاف) والمنتجات من سحابة فايرستور عند تحميل الصفحة
+        async function loadCloudData() {
+            try {
+                // 1. جلب الإعدادات العامة (التنويه وصورة البانر)
+                const settingsDoc = await getDoc(doc(db, "settings", "store_config"));
+                if (settingsDoc.exists()) {
+                    const data = settingsDoc.data();
+                    if (data.announcement) {
+                        document.getElementById('announcement-input').value = data.announcement;
+                        const annBar = document.getElementById('announcement-bar');
+                        annBar.innerText = data.announcement;
+                        annBar.style.display = 'block';
+                    }
+                    if (data.heroBg) {
+                        const heroSection = document.getElementById('hero-section');
+                        heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${data.heroBg}')`;
+                    }
+                }
+
+                // 2. جلب المنتجات من قاعدة البيانات السحابية
+                const querySnapshot = await getDocs(collection(db, "products"));
+                products = [];
+                querySnapshot.forEach((docSnap) => {
+                    products.push({ id: docSnap.id, ...docSnap.data() });
+                });
+
+                renderProducts(currentFilter);
+                renderAdminProductsList();
+            } catch (error) {
+                console.error("خطأ في جلب البيانات من السحابة: ", error);
+                document.getElementById('products-grid').innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:red;">تعذر الاتصال بالسحابة. تأكد من إعدادات قاعدة البيانات.</p>';
+            }
+        }
+
+        // حفظ التنويه في السحابة
+        window.saveAnnouncementToCloud = async function() {
+            const val = document.getElementById('announcement-input').value.trim();
+            try {
+                await setDoc(doc(db, "settings", "store_config"), { announcement: val }, { merge: true });
+                const annBar = document.getElementById('announcement-bar');
+                if (val) {
+                    annBar.innerText = val;
+                    annBar.style.display = 'block';
+                } else {
+                    annBar.style.display = 'none';
+                }
+                alert('تم حفظ التنويه في السحابة بنجاح!');
+            } catch (error) {
+                alert('حدث خطأ أثناء الحفظ بالسحابة: ' + error.message);
+            }
+        }
+
+        // تحديث صورة الغلاف ورفعها إلى Firebase Storage
+        window.updateHeroImageCloud = async function() {
+            const fileInput = document.getElementById('hero-img-file');
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const storageRef = ref(storage, 'hero_images/' + Date.now() + '_' + file.name);
+                
+                alert('جاري رفع صورة الغلاف إلى السحابة...');
+                try {
+                    const snapshot = await uploadBytes(storageRef, file);
+                    const downloadURL = await getDownloadURL(snapshot.ref);
+
+                    await setDoc(doc(db, "settings", "store_config"), { heroBg: downloadURL }, { merge: true });
+                    
+                    const heroSection = document.getElementById('hero-section');
+                    heroSection.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${downloadURL}')`;
+                    
+                    alert('تم تحديث وحفظ صورة الغلاف في السحابة بنجاح!');
+                } catch (error) {
+                    alert('فشل رفع الصورة: ' + error.message);
+                }
+            } else {
+                alert('يرجى اختيار صورة أولاً.');
+            }
+        }
+
+        // حفظ أو تعديل منتج وإرساله للسحابة
+        window.saveProductToCloud = async function() {
+            const editId = document.getElementById('edit-product-id').value;
+            const title = document.getElementById('new-title').value.trim();
+            const category = document.getElementById('new-category').value;
+            const price = document.getElementById('new-price').value.trim();
+            const imgFileinput = document.getElementById('new-img-file');
+
+            if (!title || !price) {
+                alert('يرجى تعبئة حقل اسم المنتج والسعر على الأقل.');
+                return;
+            }
+
+            alert('جاري حفظ البيانات والصورة في سحابة Firebase...');
+
+            try {
+                let imgUrl = 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=500&q=80';
+                
+                if (editId) {
+                    const existingProd = products.find(p => p.id === editId);
+                    if (existingProd) imgUrl = existingProd.img;
+                }
+
+                if (imgFileinput.files && imgFileinput.files[0]) {
+                    const file = imgFileinput.files[0];
+                    const storageRef = ref(storage, 'products/' + Date.now() + '_' + file.name);
+                    const snapshot = await uploadBytes(storageRef, file);
+                    imgUrl = await getDownloadURL(snapshot.ref);
+                }
+
+                const productData = { title, category, price, img: imgUrl };
+
+                if (editId) {
+                    await updateDoc(doc(db, "products", editId), productData);
+                    alert('تم تعديل المنتج في السحابة بنجاح!');
+                } else {
+                    await addDoc(collection(db, "products"), productData);
+                    alert('تمت إضافة المنتج الجديد للسحابة بنجاح!');
+                }
+
+                resetProductForm();
+                loadCloudData();
+            } catch (error) {
+                alert('حدث خطأ أثناء الاتصال بالسحابة: ' + error.message);
+            }
+        }
+
+        // حذف منتج من السحابة
+        window.deleteProductCloud = async function(id) {
+            if (confirm('هل أنت متأكد من حذف هذا المنتج من السحابة؟')) {
+                try {
+                    await deleteDoc(doc(db, "products", id));
+                    alert('تم الحذف من السحابة بنجاح!');
+                    loadCloudData();
+                } catch (error) {
+                    alert('حدث خطأ أثناء الحذف: ' + error.message);
+                }
+            }
+        }
+
+        // تعبئة البيانات لتعديل المنتج
+        window.editProduct = function(id) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                document.getElementById('edit-product-id').value = product.id;
+                document.getElementById('new-title').value = product.title;
+                document.getElementById('new-category').value = product.category;
+                document.getElementById('new-price').value = product.price;
+                
+                document.getElementById('form-title').innerText = 'تعديل المنتج سحابياً';
+                document.getElementById('save-product-btn').innerText = 'حفظ التعديلات بالسحابة';
+                document.getElementById('cancel-edit-btn').style.display = 'inline-block';
+                
+                document.getElementById('admin-panel').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        window.resetProductForm = function() {
+            document.getElementById('edit-product-id').value = '';
+            document.getElementById('new-title').value = '';
+            document.getElementById('new-price').value = '';
+            document.getElementById('new-img-file').value = '';
+            
+            document.getElementById('form-title').innerText = 'إضافة منتج جديد سحابياً';
+            document.getElementById('save-product-btn').innerText = 'حفظ المنتج بالسحابة';
+            document.getElementById('cancel-edit-btn').style.display = 'none';
+        }
+
+        // عرض المنتجات على واجهة المتجر
+        function renderProducts(filter = 'all') {
+            currentFilter = filter;
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+            
+            let filtered = filter === 'all' ? products : products.filter(p => p.category === filter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#777;">لا توجد منتجات متاحة في هذا القسم حالياً.</p>';
+                return;
+            }
+
+            filtered.forEach(p => {
+                let catName = p.category === 'perfumes' ? 'عطور' : p.category === 'electronics' ? 'إلكترونيات' : 'ساعات';
+                let waMessage = encodeURIComponent(`مرحباً، أرغب في طلب هذا المنتج:\n- ${p.title}\n- السعر: ${p.price}`);
+                let waLink = `https://wa.me/962796115364?text=${waMessage}`;
+
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <img src="${p.img}" alt="${p.title}" class="product-img" onerror="this.src='https://via.placeholder.com/300?text=سوق+عدي'">
+                        <div class="product-info">
+                            <span class="product-category">${catName}</span>
+                            <h3 class="product-title">${p.title}</h3>
+                            <div class="product-price">${p.price}</div>
+                            <a href="${waLink}" target="_blank" class="buy-btn"><i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> اطلب الان</a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.filterProducts = function(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts(category);
+        }
+
+        function renderAdminProductsList() {
+            const listDiv = document.getElementById('admin-products-list');
+            listDiv.innerHTML = '';
+            products.forEach(p => {
+                listDiv.innerHTML += `
+                    <div class="admin-product-item">
+                        <span><strong>${p.title}</strong> (${p.price})</span>
+                        <div class="action-btns">
+                            <button class="edit-btn" onclick="editProduct('${p.id}')">تعديل</button>
+                            <button class="delete-btn" onclick="deleteProductCloud('${p.id}')">حذف</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // نافذة سياسة الخصوصية
+        const privacyModal = document.getElementById('privacy-modal');
+        const privacyLink = document.getElementById('privacy-link');
+        const closePrivacy = document.getElementById('close-privacy');
+
+        privacyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            privacyModal.style.display = 'flex';
+        });
+
+        closePrivacy.addEventListener('click', () => {
+            privacyModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === privacyModal) privacyModal.style.display = 'none';
+        });
+
+        // تفعيل لوحة الأدمن بـ 10 نقرات على اسم Oday Ghassan
+        let clickCount = 0;
+        let clickTimer = null;
+        const adminTrigger = document.getElementById('adminTrigger');
+        const adminPanel = document.getElementById('admin-panel');
+
+        adminTrigger.addEventListener('click', () => {
+            clickCount++;
+            clearTimeout(clickTimer);
+            
+            clickTimer = setTimeout(() => {
+                clickCount = 0;
+            }, 800);
+
+            if (clickCount === 10) {
+                clickCount = 0;
+                let password = prompt("أدخل كلمة مرور الأدمن:");
+                if (password === "ooddaayy") {
+                    adminPanel.style.display = 'block';
+                    renderAdminProductsList();
+                    alert('مرحباً بك يا عدي، تم تسجيل الدخول لوحة التحكم السحابية بنجاح!');
+                    adminPanel.scrollIntoView({ behavior: 'smooth' });
+                } else if (password !== null) {
+                    alert('كلمة المرور غير صحيحة!');
+                }
+            }
+        });
+
+        // تحميل البيانات السحابية عند فتح الصفحة لأول مرة
+        loadCloudData();
+    </script>
+</body>
+</html>
